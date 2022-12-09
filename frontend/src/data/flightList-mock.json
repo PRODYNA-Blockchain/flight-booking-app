@@ -1,0 +1,29 @@
+[
+  {
+    "flightId": "1",
+    "name": "Thessaloniki - Athens",
+    "date": "2022-12-25T16:00:00Z",
+    "seatsCount": 50,
+    "seatsRemaining": 50,
+    "seatPrice": 100,
+    "status": "Sale"
+  },
+  {
+    "flightId": "2",
+    "name": "Athens - Thessaloniki ",
+    "date": "2022-12-25T18:00:00Z",
+    "seatsCount": 50,
+    "seatsRemaining": 50,
+    "seatPrice": 100,
+    "status": "Sale"
+  },
+  {
+    "flightId": "3",
+    "name": "Thessaloniki - Athens",
+    "date": "2023-01-23T19:00:00Z",
+    "seatsCount": 50,
+    "seatsRemaining": 50,
+    "seatPrice": 100,
+    "status": "Sale"
+  }
+]
