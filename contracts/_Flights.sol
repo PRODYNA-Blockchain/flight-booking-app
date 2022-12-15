@@ -2,11 +2,13 @@
 pragma solidity ^0.8.7;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 
 
-contract FlightNFT is ERC721, Ownable {
+contract FlightNFT is ERC721URIStorage, Ownable {
+    string[3] uris = ["https://jsonkeeper.com/b/OFXP", "https://jsonkeeper.com/b/SVO8", "https://jsonkeeper.com/b/5NQA"];
+
     address payable private _owner;
     address nftAdress;
 
@@ -21,6 +23,7 @@ contract FlightNFT is ERC721, Ownable {
             _tokenIds.increment();
             uint256 newItemId = _tokenIds.current();
             _mint(owner, newItemId);
+            _setTokenURI(newItemId, uris[i]);
         }
     }
 
@@ -40,11 +43,13 @@ contract Flights is Ownable {
         _owner = payable(msg.sender);
     }
 
-    event SeatBooked(bytes32 indexed flightId, address indexed passenger);
+    event SeatBooked(string indexed flightId, address indexed passenger);
 
-    enum FlightStatus { Sale, Closed }
     struct Flight {
-        FlightStatus status;
+        string from;
+        string to;
+        uint startTime;
+        uint endTime;
         bytes32 flightId;
         FlightNFT flightNFT;
         uint seatsCount;
@@ -57,7 +62,7 @@ contract Flights is Ownable {
     uint _flightIndex = 0;
     mapping(bytes32 => uint) _flightIndexFromId;
 
-    function createFlight(string memory flightId, uint seatPrice, uint seatCount) public onlyOwner {
+    function createFlight(string memory flightId, string memory from, string memory to, uint startTime, uint endTime, uint seatPrice, uint seatCount) public onlyOwner {
         require(seatPrice > 0, "Seat price must be greater than 0");
         require(seatCount > 0, "Flight must have seats");
 
@@ -65,16 +70,11 @@ contract Flights is Ownable {
         _flightIds.push(flightId);
 
         FlightNFT _flightNFT = new FlightNFT(flightId, flightId, msg.sender, seatCount);
-        Flight memory _flight = Flight(FlightStatus.Sale, flightIdBytes, _flightNFT, seatCount, seatCount, seatPrice);
+        Flight memory _flight = Flight(from, to, startTime, endTime, flightIdBytes, _flightNFT, seatCount, seatCount, seatPrice);
 
         _flights.push(_flight);
         _flightIndexFromId[flightIdBytes] = _flightIndex;
         _flightIndex++;
-    }
-
-    function closeFlight(bytes32 flightId) public onlyOwner {
-        Flight storage flight = getFlight(flightId);
-        flight.status = FlightStatus.Closed;
     }
 
     function book(string memory flightId, uint256 tokenId) public payable {
@@ -82,22 +82,21 @@ contract Flights is Ownable {
         Flight storage flight = getFlight(flightIdBytes);
         require(msg.value > 0, "Price must be greater than zero");
         require(msg.value == flight.seatPrice, "Value must be equal with the current seat price");
-        require(flight.status == FlightStatus.Sale, "There is no such open flight");
         require(flight.seatsRemaining > 0, "There are not enough seats to make this booking");
 
         payable(_owner).transfer(msg.value);
         flight.seatsRemaining--;
 
         flight.flightNFT.book(tokenId, msg.sender);
-        emit SeatBooked(flightIdBytes, msg.sender);
+        emit SeatBooked(flightId, msg.sender);
     }
 
     function getFlightById(string memory flightId) public view
-    returns(FlightStatus, bytes32, uint, uint, uint, address)
+    returns(string memory, string memory, uint, uint, uint, uint, uint, address)
     {
         bytes32 flightIdBytes = bytes32(bytes(flightId));
         Flight storage flight = getFlight(flightIdBytes);
-        return (flight.status, flight.flightId, flight.seatsCount, flight.seatsRemaining, flight.seatPrice, address(flight.flightNFT));
+        return (flight.from, flight.to, flight.startTime, flight.endTime, flight.seatsCount, flight.seatsRemaining, flight.seatPrice, address(flight.flightNFT));
     }
 
     function getFlight(bytes32 flightId) private view returns (Flight storage) {
