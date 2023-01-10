@@ -12,22 +12,21 @@ const accountAddressShort = computed(() => {
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="75" height="75" />
-
+    <img alt="Camino logo" class="logo" src="@/assets/camino-logo.png" width="230" height="62" />
     <div class="wrapper">
       <!-- <HelloWorld msg="You did it!" /> -->
       <nav>
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/about">My Bookings</RouterLink>
       </nav>
       <div class="user-info">
         <div class="item">
-          <h3 class="value">User</h3>
-          <h3>{{ accountAddressShort }}</h3>
+          <h1 class="value">User</h1>
+          <h1>{{ accountAddressShort }}</h1>
         </div>
         <div class="item">
-          <h3 class="value">Balance</h3>
-          <h3>{{ balance?.toFixed(4) }} <span class="value">ETH</span></h3>
+          <h1 class="value">Balance</h1>
+          <h1>{{ balance?.toFixed(4) }} <span class="value">ETH</span></h1>
         </div>
       </div>
     </div>
@@ -50,7 +49,7 @@ header {
 
 nav {
   width: 100%;
-  font-size: 12px;
+  font-size: 11px;
   text-align: center;
   margin-top: 2rem;
 }
@@ -68,8 +67,8 @@ header .user-info {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    h3 {
-      font-size: 1rem;
+    h1 {
+      font-size: 19px;
       font-weight: 500;
       margin-bottom: 0.4rem;
       color: var(--color-heading);
@@ -121,10 +120,10 @@ nav a:first-of-type {
   nav {
     text-align: left;
     margin-left: -1rem;
-    font-size: 1rem;
+    font-size: 1.2rem;
 
     padding: 1rem 0;
-    margin-top: 1rem;
+    margin-top: 1.5rem;
   }
 }
 </style>

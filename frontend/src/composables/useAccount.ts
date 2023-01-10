@@ -16,7 +16,8 @@ export default function useAccount() {
       accountAddress.value = accounts[0];
     });
   } else {
-    console.log('Metamask not found, you have to install Metamask plugin on your browser');
+    window.alert('Metamask extension not found, you have to install Metamask extension on your browser in order to continue using the app');
+    console.log('Metamask not found, you have to install Metamask extension on your browser');
   }
 
   watch(accountAddress, () => {
@@ -33,7 +34,7 @@ export default function useAccount() {
       return;
     }
 
-    await contract.value?.methods
+    await contract.value.methods
       .getBalance()
       .call({ from })
       .then((balanceStr: string) => {

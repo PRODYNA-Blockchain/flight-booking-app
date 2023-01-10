@@ -1,0 +1,20 @@
+[
+  {
+    "flightId": "1",
+    "from": "Samos",
+    "to": "Athens",
+    "startTime": 1676023200000,
+    "endTime": 1676026800000,
+    "seatPrice": 80,
+    "seatCount": 3
+  },
+  {
+    "flightId": "2",
+    "from": "Miami",
+    "to": "Chicago",
+    "startTime": 1676029200000,
+    "endTime": 1676036800000,
+    "seatPrice": 30,
+    "seatCount": 3
+  }
+]

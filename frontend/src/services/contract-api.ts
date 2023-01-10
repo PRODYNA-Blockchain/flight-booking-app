@@ -61,23 +61,23 @@ async function fetchFlight(id: string) {
   return response;
 }
 
-async function postBookFlight(flightId: string, tokenId: number, seatPrice: number, accountAddress: string) {
-  await contract.value?.methods
-    ?.book(flightId, tokenId)
-    .send({ from: accountAddress, value: seatPrice })
-    .on('transactionHash', (hash: any) => {
-      console.log('Transaction hash: ', hash);
-    })
-    .on('confirmation', (confirmationNumber: number, receipt: any) => {
-      console.log('confirmation No: ', confirmationNumber);
-      console.log('Receipt: ', receipt);
-      // props.sendData('book-confirmed', receipt.transactionHash);
-    })
-    .on('error', (error: any) => {
-      console.log('error: ', error);
-      console.error(error);
-    });
-}
+// async function postBookFlight(flightId: string, tokenId: number, seatPrice: number, accountAddress: string) {
+//   await contract.value?.methods
+//     ?.book(flightId, tokenId)
+//     .send({ from: accountAddress, value: seatPrice })
+//     .on('transactionHash', (hash: any) => {
+//       console.log('Transaction hash: ', hash);
+//     })
+//     .on('confirmation', (confirmationNumber: number, receipt: any) => {
+//       console.log('confirmation No: ', confirmationNumber);
+//       console.log('Receipt: ', receipt);
+//       // props.sendData('book-confirmed', receipt.transactionHash);
+//     })
+//     .on('error', (error: any) => {
+//       console.log('error: ', error);
+//       console.error(error);
+//     });
+// }
 
 async function bookFlight(flightId: string, tokenId: number, value: number, account: string): Promise<any> {
   let response: any = {};
@@ -105,4 +105,4 @@ async function bookFlight(flightId: string, tokenId: number, value: number, acco
   return response;
 }
 
-export { fetchAllFlights, postBookFlight, bookFlight };
+export { fetchAllFlights, bookFlight };
