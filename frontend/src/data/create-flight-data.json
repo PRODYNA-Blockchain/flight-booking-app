@@ -16,5 +16,14 @@
     "endTime": 1676036800000,
     "seatPrice": 30,
     "seatCount": 3
+  },
+  {
+    "flightId": "2",
+    "from": "Frankfurt",
+    "to": "Thessaloniki",
+    "startTime": 1676034200000,
+    "endTime": 1676036200000,
+    "seatPrice": 25,
+    "seatCount": 3
   }
 ]

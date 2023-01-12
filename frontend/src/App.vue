@@ -18,6 +18,7 @@ const accountAddressShort = computed(() => {
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">My Bookings</RouterLink>
+        <RouterLink to="/settings">Settings</RouterLink>
       </nav>
       <div class="user-info">
         <div class="item">
@@ -26,7 +27,7 @@ const accountAddressShort = computed(() => {
         </div>
         <div class="item">
           <h1 class="value">Balance</h1>
-          <h1>{{ balance?.toFixed(4) }} <span class="value">ETH</span></h1>
+          <h1>{{ balance?.toFixed(4) }} <span class="value">CAM</span></h1>
         </div>
       </div>
     </div>

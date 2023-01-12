@@ -4,10 +4,12 @@ import { useDateFormat } from '@vueuse/core';
 
 import type { Receipt } from '@/types/types';
 
-const { contract } = useWeb3();
+console.log('useWeb3');
 const { getUserBalance } = useAccount();
 
 async function fetchAllFlights() {
+  const { contract } = useWeb3();
+
   let flightIds: string[] = [];
   let flightListRaw: any[] = [];
   let flightList: any[] = [];
@@ -54,6 +56,8 @@ async function fetchAllFlights() {
 }
 
 async function fetchFlight(id: string) {
+  const { contract } = useWeb3();
+
   const response = await contract.value?.methods.getFlightById(id).call({}, function (error: any, result: any) {
     if (error) return;
     else return result;
@@ -81,6 +85,8 @@ async function fetchFlight(id: string) {
 
 async function bookFlight(flightId: string, tokenId: number, value: number, account: string): Promise<any> {
   let response: any = {};
+  const { contract } = useWeb3();
+
   await contract.value?.methods
     ?.book(flightId, tokenId)
     .send({ from: account, value })
