@@ -1,10 +1,8 @@
 import useWeb3 from '@/composables/useWeb3';
 import useAccount from '@/composables/useAccount';
 import { useDateFormat } from '@vueuse/core';
-
 import type { Receipt } from '@/types/types';
 
-console.log('useWeb3');
 const { getUserBalance } = useAccount();
 
 async function fetchAllFlights() {
@@ -15,7 +13,10 @@ async function fetchAllFlights() {
   let flightList: any[] = [];
 
   await contract.value?.methods.getAllFlights().call({}, (error: any, result: string[]) => {
-    if (error) return [];
+    if (error) {
+      console.error(error);
+      return [];
+    }
     flightIds = result;
   });
 
@@ -35,7 +36,7 @@ async function fetchAllFlights() {
   });
 
   flightListRaw.forEach((el) => {
-    const startTime = useDateFormat(new Date(parseInt(el[2])), 'ddd D MMM YYYY - HH:mm');
+    const startTime = useDateFormat(new Date(parseInt(el[2]) * 1000), 'ddd D MMM YYYY - HH:mm');
     const durationInt = parseInt(el[3]) - parseInt(el[2]);
 
     const flight = {
@@ -46,7 +47,7 @@ async function fetchAllFlights() {
       totalSeats: el[4],
       availableSeats: el[5],
       seatPrice: el[6],
-      tokenId: el[7],
+      nftCollectionAddress: el[7],
       id: el?.id,
     };
     flightList.push(flight);
@@ -97,17 +98,15 @@ async function bookFlight(flightId: string, tokenId: number, value: number, acco
       };
     })
     .catch((error: Error) => {
-      console.error(error);
       console.log('error.message: ', error.message);
-      // response = error;
       response = {
         status: false,
         error: error,
       };
+      console.error(error);
     });
 
   getUserBalance(account);
-
   return response;
 }
 

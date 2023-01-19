@@ -1,0 +1,7 @@
+{
+  "description": "This is one dummy flight ticket",
+  "external_url": "https://wallet.camino.foundation",
+  "image": "",
+  "name": "Ticket",
+  "attributes": [{ "SeatNumber": "01A", "From": "Thessaloniki", "To": "Athens", "StartTime": 1676023200, "EndTime": 1676026800 }]
+}

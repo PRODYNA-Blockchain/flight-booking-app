@@ -1,24 +1,30 @@
 import { ref } from 'vue';
 import Web3 from 'web3';
 import erc20abi from '../contract-schemas/Flights.json';
+import { useLocalStorage } from '@vueuse/core';
 import type { Contract } from 'web3-eth-contract';
 
-// const contractAddress = '0x9253cB32201C9fEF68718D99eAB5784126921Ce7'; //5_Flights.sol
-// const contractAddress = '0x6333CA09fE20c7C76914335C04341fe86da5BFfc'; //6_Flights.sol
-const defaultContractAddress = '0x0415D3F2A0E8B785293861f792fBb07BB76C0354'; //6_Flights.sol
-const contractAddress = ref<string>(defaultContractAddress);
+const defaultContractAddress = '0xFaf2d038f23F99e7c984C70D8c33556358Bf09b0'; //6_Flights.sol
+const contract = ref<Contract>();
 
 export default function useWeb3() {
-  const contract = ref<Contract>();
-  const web3 = new Web3(Web3.givenProvider);
-  createContract();
+  const lsAddress = useLocalStorage('contractAddress', '');
+  // const contractAddress = ref<string>(lsAddress.value ? lsAddress.value : defaultContractAddress);
+  const errorMsg = ref<string>('');
+  const hasError = ref<boolean>(false);
 
-  function createContract() {
+  createContract(lsAddress.value);
+
+  function createContract(address: string | undefined) {
     const web3 = new Web3(Web3.givenProvider);
     let contractResponse;
+    errorMsg.value = '';
+    hasError.value = false;
     try {
-      contractResponse = new web3.eth.Contract(erc20abi as any, contractAddress.value);
-    } catch (error) {
+      contractResponse = new web3.eth.Contract(erc20abi as any, address);
+    } catch (error: any) {
+      errorMsg.value = 'Contract creation failed, view console for error message';
+      hasError.value = true;
       console.error(error);
     } finally {
       if (contractResponse) contract.value = contractResponse;
@@ -26,10 +32,10 @@ export default function useWeb3() {
     }
   }
 
-  function updateContractAddress(address: string) {
-    contractAddress.value = address;
-    createContract();
+  function updateContract(address: string | undefined) {
+    // const lsAddr = useLocalStorage('contractAddress', '');
+    createContract(address);
   }
 
-  return { contract, updateContractAddress, contractAddress };
+  return { contract, updateContract, errorMsg, hasError };
 }

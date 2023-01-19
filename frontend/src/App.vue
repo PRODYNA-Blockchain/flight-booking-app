@@ -14,10 +14,9 @@ const accountAddressShort = computed(() => {
   <header>
     <img alt="Camino logo" class="logo" src="@/assets/camino-logo.png" width="230" height="62" />
     <div class="wrapper">
-      <!-- <HelloWorld msg="You did it!" /> -->
       <nav>
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">My Bookings</RouterLink>
+        <RouterLink to="/my-bookings">My Bookings</RouterLink>
         <RouterLink to="/settings">Settings</RouterLink>
       </nav>
       <div class="user-info">
@@ -58,7 +57,7 @@ nav {
 header .user-info {
   display: flex;
   flex-direction: column;
-  min-width: 250px;
+  min-width: 300px;
   justify-content: center;
   align-items: flex-end;
   margin: 8px;

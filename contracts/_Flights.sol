@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 
 
 contract FlightNFT is ERC721URIStorage, Ownable {
-    string[3] uris = ["https://jsonkeeper.com/b/OFXP", "https://jsonkeeper.com/b/SVO8", "https://jsonkeeper.com/b/5NQA"];
+    string[3] uris = ["http://13.93.47.218/json/OFXP.json", "http://13.93.47.218/json/SVO8.json", "http://13.93.47.218/json/5NQA.json"];
 
     address payable private _owner;
     address nftAdress;

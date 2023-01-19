@@ -3,12 +3,11 @@ import { watch } from 'vue';
 import useWeb3 from '@/composables/useWeb3';
 import { useLocalStorage } from '@vueuse/core';
 
-const { updateContractAddress, contract } = useWeb3();
+const { contract, errorMsg, updateContract } = useWeb3();
+const contractAddress = useLocalStorage('contractAddress', '');
 
-const address = useLocalStorage('contractAddress', null);
-
-watch(address, () => {
-  updateContractAddress(address.value);
+watch(contractAddress, () => {
+  updateContract(contractAddress.value);
 });
 </script>
 
@@ -18,12 +17,21 @@ watch(address, () => {
     <br />
     <div class="address-row">
       <div class="input-field">
-        <v-text-field label="Deployed Contract Address" prepend-icon="mdi-file-document" v-model="address" class="input-field" clearable />
+        <v-text-field
+          label="Deployed Contract Address"
+          prepend-icon="mdi-file-document"
+          v-model="contractAddress"
+          class="input-field"
+          clearable
+        />
       </div>
       <div>
-        <v-icon v-if="contract && address" icon="mdi-check-underline" color="success" size="x-large" />
+        <v-icon v-if="contract && contractAddress" icon="mdi-check-underline" color="success" size="x-large" />
         <v-icon v-else icon="mdi-alert-circle" class="alert" size="x-large" />
       </div>
+    </div>
+    <div>
+      {{ errorMsg }}
     </div>
   </main>
 </template>
