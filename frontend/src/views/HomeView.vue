@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive, ref, onMounted } from 'vue';
-import { fetchAllFlights, bookFlight } from '@/services/contract-api';
+import { fetchAllFlights, bookFlight } from '@/services/contract-api'; // import contract api methods
 import useAccount from '@/composables/useAccount';
 import useWeb3 from '@/composables/useWeb3';
 import flightListMock from '@/data/flightList-mock.json';
@@ -8,21 +8,16 @@ import receiptMock from '@/data/book-receipt.json';
 import type { Receipt } from '@/types/types';
 
 const { accountAddress } = useAccount();
-
 const flightList = ref<any[]>([]);
 const selectedFlightIndex = ref<number>(-1);
 const seatNumber = ref<number>(1);
-
 const bookReceipts = reactive<any[]>([]);
 const isLoading = ref<boolean>(false);
-
 const { hasError: hasContractError } = useWeb3();
 
 onMounted(async () => {
-  flightList.value = await fetchAllFlights();
+  flightList.value = await fetchAllFlights(); // fetch flight list from blockchain network
 });
-
-// bookReceipts.push(receiptMock);
 
 function selectFlight(index: number) {
   if (selectedFlightIndex.value === index) selectedFlightIndex.value = -1;
@@ -31,7 +26,7 @@ function selectFlight(index: number) {
 
 async function bookSeat(flightId: string, seatNumber: number, seatPrice: number, accountAddress: string) {
   isLoading.value = true;
-  const response = await bookFlight(flightId, seatNumber, seatPrice, accountAddress);
+  const response = await bookFlight(flightId, seatNumber, seatPrice, accountAddress); // book seat on blockchain network
   isLoading.value = false;
 
   if (response?.status) {
