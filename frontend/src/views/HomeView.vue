@@ -31,7 +31,7 @@ async function bookSeat(flightId: string, seatNumber: number, seatPrice: number,
 
   if (response?.status) {
     bookReceipts.push(response.receipt);
-    flightList.value = await fetchAllFlights();
+    flightList.value = await fetchAllFlights(); // update flight list after booking
   }
 }
 </script>

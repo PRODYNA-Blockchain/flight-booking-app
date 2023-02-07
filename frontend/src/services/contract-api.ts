@@ -88,7 +88,7 @@ async function bookFlight(flightId: string, tokenId: number, value: number, acco
       console.error(error);
     });
 
-  getUserBalance(account);
+  getUserBalance(account); // every time a flight is booked, get the user's balance
   return response;
 }
 

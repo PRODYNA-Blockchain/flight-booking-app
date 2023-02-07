@@ -13,13 +13,13 @@ export default function useWeb3() {
 
   createContract(lsAddress.value); // create contract on load
 
-  function createContract(address: string | undefined) {
+  function createContract(accountAddress: string | undefined) {
     const web3 = new Web3(Web3.givenProvider); // create web3 instance of the browser's web3 provider
     let contractResponse;
     errorMsg.value = '';
     hasError.value = false;
     try {
-      contractResponse = new web3.eth.Contract(erc20abi as any, address); // create contract instance
+      contractResponse = new web3.eth.Contract(erc20abi as any, accountAddress); // create contract instance
     } catch (error: any) {
       errorMsg.value = 'Contract creation failed, view console for error message';
       hasError.value = true;
@@ -35,5 +35,5 @@ export default function useWeb3() {
     createContract(address);
   }
 
-  return { contract, updateContract, errorMsg, hasError };
+  return { contract, updateContract, errorMsg, hasError }; // return contract instance
 }
