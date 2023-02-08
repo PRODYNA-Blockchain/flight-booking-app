@@ -20,25 +20,25 @@ export default function useAccount() {
     console.log('Metamask not found, you have to install Metamask extension on your browser');
   }
 
+  // every time the account address changes, get the current user's balance
   watch(accountAddress, () => {
-    // watch for account address changes
-    getUserBalance(accountAddress.value); // every time the account address changes, get the user's balance
+    getUserBalance(accountAddress.value);
   });
 
-  async function getUserBalance(from: string) {
+  async function getUserBalance(fromAddress: string) {
     // get user's balance
     if (!contract.value || !contract.value.methods) {
       console.log('contract not found');
       return;
     }
-    if (!from) {
+    if (!fromAddress) {
       console.log('user address not found');
       return;
     }
 
     await contract.value.methods
       .getBalance()
-      .call({ from })
+      .call({ fromAddress })
       .then((balanceStr: string) => {
         balance.value = parseFloat(web3.utils.fromWei(balanceStr, 'ether'));
       }); // call contract's get user's balance method

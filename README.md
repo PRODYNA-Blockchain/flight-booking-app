@@ -30,6 +30,10 @@ You can find and use already deployed contract addresses below:
 
 `0x6beAd0a638407798C9461B9590b452CE21ca6195`
 
+#### Contract 4
+
+`0xb3D7DB2c87fAf0B20a63b8248f20c61B95527305`
+
 ### Metamask Extension Configuration
 
 In order to access your wallet you need to install the metamask extension to your browser (download it here for chrome: https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn)
